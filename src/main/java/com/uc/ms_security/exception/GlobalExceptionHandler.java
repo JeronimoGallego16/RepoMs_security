@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@RestControllerAdvice
+@RestControllerAdvice //Es la que mantien el control de las excepciones, maneja los códigos de excepciones
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApplicationException.class)

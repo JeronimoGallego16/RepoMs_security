@@ -1,5 +1,5 @@
 package com.uc.ms_security.exception;
-
+// Sirve para personalizar lo que son las excepciones.
 public class ApplicationException extends RuntimeException {
 
     private final ErrorCase errorCase;
