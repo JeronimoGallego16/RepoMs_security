@@ -31,8 +31,7 @@ public class ProfileMapper {
         return new ProfileResponseDTO(
                 profile.getId(),
                 profile.getPhone(),
-                profile.getBirthDate(),
-                profile.getUser().getId()
+                profile.getBirthDate()
         );
     }
 

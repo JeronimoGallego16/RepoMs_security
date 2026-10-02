@@ -32,7 +32,7 @@ public class ProfileService {
                 ErrorCase.NOT_FOUND,
                         "Usuario no encontrado"
                 ));
-        if (profileRepository.existsByUserId(dto.getUserId())) {
+        if (profileRepository.existsById(dto.getUserId())) {
             throw new ApplicationException(
                 ErrorCase.ALREADY_EXISTS,
                     "El usuario ya tiene un perfil"

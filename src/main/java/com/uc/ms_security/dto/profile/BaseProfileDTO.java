@@ -19,8 +19,8 @@ public abstract class BaseProfileDTO {
     )
     @Size(
             min = 7,
-            max = 20,
-            message = "El teléfono debe tener entre 7 y 20 caracteres"
+            max = 10,
+            message = "El teléfono debe tener entre 7 y 10 caracteres"
     )
     private String phone;
 
