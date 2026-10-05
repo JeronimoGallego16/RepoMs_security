@@ -1,6 +1,7 @@
 package com.uc.ms_security.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,17 +23,19 @@ public class Profile {
 
     @Column(
             nullable = false,
-            length = 20
+            length = 30
     )
     private String phone;
 
     @Column(
+            name = "birth_date",
             nullable = false
     )
     private LocalDate birthDate;
 
-    // Relación 1 a 1 con User (un usuario solo puede tener un perfil)
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(
             name = "user_id",
             nullable = false,

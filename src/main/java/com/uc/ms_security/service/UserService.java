@@ -2,6 +2,7 @@ package com.uc.ms_security.service;
 
 import com.uc.ms_security.dto.user.CreateUserDTO;
 import com.uc.ms_security.dto.user.UpdateUserDTO;
+import com.uc.ms_security.dto.user.UserDetailResponseDTO;
 import com.uc.ms_security.dto.user.UserResponseDTO;
 import com.uc.ms_security.entity.User;
 import com.uc.ms_security.exception.ApplicationException;
@@ -25,12 +26,12 @@ public class UserService {
     public UserResponseDTO create(CreateUserDTO dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new ApplicationException(
-                ErrorCase.ALREADY_EXISTS,
+                    ErrorCase.ALREADY_EXISTS,
                     "Ya existe un usuario con este email"
             );
         }
-        User user = userMapper.toEntity(dto); //mirar estas lineas
-        User savedUser = userRepository.save(user); //mirar estas lineas id
+        User user = userMapper.toEntity(dto);
+        User savedUser = userRepository.save(user);
         return userMapper.toResponseDTO(savedUser);
     }
     public List<UserResponseDTO> findAll() {
@@ -39,9 +40,9 @@ public class UserService {
     }
     private User findUser(Long id) {
         return userRepository.findById(id)
-            .orElseThrow(() -> new ApplicationException(
-                ErrorCase.NOT_FOUND,
-                        "Usuario no encontrado"
+                .orElseThrow(() -> new ApplicationException(
+                        ErrorCase.NOT_FOUND,
+                        "Usuario no encontrado con id: " + id
                 ));
     }
 
@@ -50,15 +51,24 @@ public class UserService {
         return userMapper.toResponseDTO(user);
     }
 
+    public UserDetailResponseDTO findByIdWithProfile(Long id) {
+        User user = userRepository.findWithProfileById(id)
+                .orElseThrow(() -> new ApplicationException(
+                        ErrorCase.NOT_FOUND,
+                        "Usuario no encontrado con id: " + id
+                ));
+        return userMapper.toDetailResponseDTO(user);
+    }
+
     public UserResponseDTO update(Long id, UpdateUserDTO dto) {
         User user = findUser(id);
         if (userRepository.existsByEmailAndIdNot(dto.getEmail(), id)) {
             throw new ApplicationException(
-                ErrorCase.ALREADY_EXISTS,
+                    ErrorCase.ALREADY_EXISTS,
                     "El email pertenece a otro usuario"
             );
         }
-        userMapper.updateEntity(dto, user); // EL cambio fue cambiado por los otros datos, cambio por referencia
+        userMapper.updateEntity(dto, user);
         User updatedUser = userRepository.save(user);
         return userMapper.toResponseDTO(updatedUser);
     }

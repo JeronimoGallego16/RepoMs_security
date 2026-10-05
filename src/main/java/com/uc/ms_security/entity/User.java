@@ -35,4 +35,12 @@ public class User {
             nullable = false
     )
     private String password;
+
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY //Este fetch es para solo traerlo cuando yo lo pida
+    )
+    private Profile profile;
 }
