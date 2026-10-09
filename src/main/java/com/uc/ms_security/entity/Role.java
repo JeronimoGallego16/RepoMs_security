@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "roles")
 @Getter
@@ -13,23 +16,16 @@ import lombok.Setter;
 public class Role {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(
-            nullable = false,
-            unique = true,
-            length = 100
-    )
+    @Column(nullable = false, unique = true, length = 50)
     private String name;
 
-    @Column(
-            length = 255
-    )
+    @Column(nullable = false, length = 255)
     private String description;
 
-    // TODO: relación N a M con User (pendiente, se hará con la tabla intermedia)
-    // TODO: relación N a M con Permission (pendiente, se hará con la tabla intermedia)
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private List<UserRole> userRoles = new ArrayList<>();
 }
+

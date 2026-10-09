@@ -14,4 +14,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @EntityGraph(attributePaths = {"profile"})
     Optional<User> findWithProfileById(Long id);
+
+    @EntityGraph(attributePaths = {"sessions"})
+    Optional<User> findWithSessionsById(Long id);
+
+    @EntityGraph(attributePaths = {"userRoles", "userRoles.role"}) // Este es un join de 3, ya que el user se hace join con la intermedia y la intermedia con el role
+    Optional<User> findWithRolesById(Long id);
 }

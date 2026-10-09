@@ -33,6 +33,7 @@ public class Session {
     private LocalDateTime expiration;
 
     @Column(
+			name = "code_2fa",
             length = 10
     )
     private String code2FA;

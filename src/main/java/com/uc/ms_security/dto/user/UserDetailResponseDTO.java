@@ -8,5 +8,5 @@ public class UserDetailResponseDTO {
     Long id;
     String name;
     String email;
-    ProfileResponseDTO profile;
+    ProfileResponseDTO profile; // se puede anexar la lista de las sesiones del usuario si lo queremos.
 }

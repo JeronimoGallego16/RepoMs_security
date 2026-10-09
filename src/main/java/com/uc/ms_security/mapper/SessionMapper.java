@@ -1,10 +1,8 @@
 package com.uc.ms_security.mapper;
 
-import com.uc.ms_security.dto.session.CreateSessionDTO;
+import com.uc.ms_security.dto.session.SessionRequestDTO;
 import com.uc.ms_security.dto.session.SessionResponseDTO;
-import com.uc.ms_security.dto.session.UpdateSessionDTO;
 import com.uc.ms_security.entity.Session;
-import com.uc.ms_security.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,18 +10,15 @@ import java.util.List;
 @Component
 public class SessionMapper {
 
-    public Session toEntity(CreateSessionDTO dto, User user) {
+    public Session toEntity(SessionRequestDTO dto) {
         Session session = new Session();
-
         session.setToken(dto.getToken());
         session.setExpiration(dto.getExpiration());
         session.setCode2FA(dto.getCode2FA());
-        session.setUser(user);
-
         return session;
     }
 
-    public void updateEntity(UpdateSessionDTO dto, Session session) {
+    public void updateEntity(SessionRequestDTO dto, Session session) {
         session.setToken(dto.getToken());
         session.setExpiration(dto.getExpiration());
         session.setCode2FA(dto.getCode2FA());
@@ -34,8 +29,7 @@ public class SessionMapper {
                 session.getId(),
                 session.getToken(),
                 session.getExpiration(),
-                session.getCode2FA(),
-                session.getUser().getId()
+                session.getCode2FA()
         );
     }
 
