@@ -1,4 +1,4 @@
-package com.uc.ms_security.dto.role;
+package com.uc.ms_security.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,6 +1,6 @@
 package com.uc.ms_security.dto.userrole;
 
-import com.uc.ms_security.dto.role.RoleResponseDTO;
+import com.uc.ms_security.dto.RoleResponseDTO;
 import lombok.Value;
 
 @Value

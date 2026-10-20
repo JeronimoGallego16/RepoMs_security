@@ -1,13 +1,13 @@
 package com.uc.ms_security.service;
 
-import com.uc.ms_security.dto.permission.CreatePermissionDTO;
-import com.uc.ms_security.dto.permission.PermissionResponseDTO;
-import com.uc.ms_security.dto.permission.UpdatePermissionDTO;
+import com.uc.ms_security.dto.PermissionRequestDTO;
+import com.uc.ms_security.dto.PermissionResponseDTO;
 import com.uc.ms_security.entity.Permission;
 import com.uc.ms_security.exception.ApplicationException;
 import com.uc.ms_security.exception.ErrorCase;
 import com.uc.ms_security.mapper.PermissionMapper;
 import com.uc.ms_security.repository.PermissionRepository;
+import com.uc.ms_security.repository.RolePermissionRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -19,10 +19,11 @@ import java.util.List;
 public class PermissionService {
 
     private final PermissionRepository permissionRepository;
+    private final RolePermissionRepository rolePermissionRepository;
 
     private final PermissionMapper permissionMapper;
 
-    public PermissionResponseDTO create(CreatePermissionDTO dto) {
+    public PermissionResponseDTO create(PermissionRequestDTO dto) {
         if (permissionRepository.existsByUrlAndMethod(dto.getUrl(), dto.getMethod())) {
             throw new ApplicationException(
                 ErrorCase.ALREADY_EXISTS,
@@ -52,7 +53,7 @@ public class PermissionService {
         return permissionMapper.toResponseDTO(permission);
     }
 
-    public PermissionResponseDTO update(Long id, UpdatePermissionDTO dto) {
+    public PermissionResponseDTO update(Long id, PermissionRequestDTO dto) {
         Permission permission = findPermission(id);
         if (permissionRepository.existsByUrlAndMethodAndIdNot(dto.getUrl(), dto.getMethod(), id)) {
             throw new ApplicationException(
@@ -67,6 +68,12 @@ public class PermissionService {
 
     public void delete(Long id) {
         Permission permission = findPermission(id);
+        if (rolePermissionRepository.existsByPermissionId(id)) {
+            throw new ApplicationException(
+                    ErrorCase.INVALID_OPERATION,
+                    "No se puede eliminar un permiso que está asignado"
+            );
+        }
         permissionRepository.delete(permission);
     }
 }

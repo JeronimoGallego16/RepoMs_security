@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "permissions")
 @Getter
@@ -30,11 +33,9 @@ public class Permission {
     )
     private String method;
 
-    @Column(
-            nullable = false,
-            length = 100
+    @OneToMany(
+            mappedBy = "permission",
+            fetch = FetchType.LAZY
     )
-    private String model;
-
-    // TODO: relación N a M con Role (pendiente, se hará con la tabla intermedia)
+    private List<RolePermission> rolePermissions = new ArrayList<>();
 }

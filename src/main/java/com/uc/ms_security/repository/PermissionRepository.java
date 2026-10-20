@@ -5,7 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PermissionRepository extends JpaRepository<Permission, Long> {
 
-    boolean existsByUrlAndMethod(String url, String method);
+    boolean existsByUrlAndMethod(
+            String url,
+            String method
+    );
 
-    boolean existsByUrlAndMethodAndIdNot(String url, String method, Long id);
+    boolean existsByUrlAndMethodAndIdNot(
+            String url,
+            String method,
+            Long id
+    );
+
 }
